@@ -1,0 +1,15 @@
+E:\CSlight\HomeWork28Function1\HomeWork28Function1\bin\Debug\net6.0\HomeWork28Function1.exe
+E:\CSlight\HomeWork28Function1\HomeWork28Function1\bin\Debug\net6.0\HomeWork28Function1.deps.json
+E:\CSlight\HomeWork28Function1\HomeWork28Function1\bin\Debug\net6.0\HomeWork28Function1.runtimeconfig.json
+E:\CSlight\HomeWork28Function1\HomeWork28Function1\bin\Debug\net6.0\HomeWork28Function1.dll
+E:\CSlight\HomeWork28Function1\HomeWork28Function1\bin\Debug\net6.0\HomeWork28Function1.pdb
+E:\CSlight\HomeWork28Function1\HomeWork28Function1\obj\Debug\net6.0\HomeWork28Function1.csproj.AssemblyReference.cache
+E:\CSlight\HomeWork28Function1\HomeWork28Function1\obj\Debug\net6.0\HomeWork28Function1.GeneratedMSBuildEditorConfig.editorconfig
+E:\CSlight\HomeWork28Function1\HomeWork28Function1\obj\Debug\net6.0\HomeWork28Function1.AssemblyInfoInputs.cache
+E:\CSlight\HomeWork28Function1\HomeWork28Function1\obj\Debug\net6.0\HomeWork28Function1.AssemblyInfo.cs
+E:\CSlight\HomeWork28Function1\HomeWork28Function1\obj\Debug\net6.0\HomeWork28Function1.csproj.CoreCompileInputs.cache
+E:\CSlight\HomeWork28Function1\HomeWork28Function1\obj\Debug\net6.0\HomeWork28Function1.dll
+E:\CSlight\HomeWork28Function1\HomeWork28Function1\obj\Debug\net6.0\refint\HomeWork28Function1.dll
+E:\CSlight\HomeWork28Function1\HomeWork28Function1\obj\Debug\net6.0\HomeWork28Function1.pdb
+E:\CSlight\HomeWork28Function1\HomeWork28Function1\obj\Debug\net6.0\HomeWork28Function1.genruntimeconfig.cache
+E:\CSlight\HomeWork28Function1\HomeWork28Function1\obj\Debug\net6.0\ref\HomeWork28Function1.dll
