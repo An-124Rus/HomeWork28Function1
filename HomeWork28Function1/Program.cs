@@ -1,4 +1,6 @@
-﻿using System.Xml.Linq;
+﻿using System;
+using System.Reflection;
+using System.Xml.Linq;
 
 internal class Program
 {
@@ -13,11 +15,11 @@ internal class Program
         bool isWorking = true;
         string userInput;
 
-        string[] NameArray = { "ФИО" };
-        string[] PositionArray = { "Должность" };
+        string[] nameArray = { "ФИО" };
+        string[] positionArray = { "Должность" };
 
         Console.WriteLine("Добро пожаловать в Кадровый учёт.");
-        Console.WriteLine("\nНажмите клавишу - Ввод для продолжения");
+        Console.WriteLine("\nНажмите любую клавишу для продолжения");
         Console.ReadKey();
 
         while (isWorking != false)
@@ -34,27 +36,19 @@ internal class Program
             switch (userInput)
             {
                 case insertNamePosition:
-
-                    InsertNamePosition(ref NameArray, ref PositionArray);
-
+                    InsertNamePosition(ref nameArray, ref positionArray);
                     break;
 
                 case outputAllList:
-
-                    OutputAllList(NameArray, PositionArray);
-
+                    OutputAllList(nameArray, positionArray);
                     break;
 
                 case removeNamePosition:
-
-                    RemoveNamePosition(ref NameArray, ref PositionArray);
-
+                    RemoveNamePosition(ref nameArray, ref positionArray);
                     break;
 
                 case searchName:
-
-                    SearchName(NameArray, PositionArray);
-
+                    SearchName(nameArray, positionArray);
                     break;
 
                 case exit:
@@ -64,119 +58,127 @@ internal class Program
         }
     }
 
-    static void InsertNamePosition(ref string[] NameArray, ref string[] PositionArray)
+    static void InsertNamePosition(ref string[] nameArray, ref string[] positionArray)
     {
         Console.WriteLine("\nВведите порядковый номер");
         int index = Convert.ToInt32(Console.ReadLine());
 
-        if (index <= NameArray.Length && index != 0)
+        if (index <= nameArray.Length && index != 0)
         {
-            Console.WriteLine("Введите ФИО");
+            Console.WriteLine("\nВведите ФИО");
             string name = Console.ReadLine();
             Console.WriteLine("\nВведите должность");
             string position = Console.ReadLine();
 
-            string[] NewNameArray = new string[NameArray.Length + 1];
-
-            NewNameArray[index] = name;
-
-            for (int i = 0; i < index; i++)
-                NewNameArray[i] = NameArray[i];
-
-            for (int i = index; i < NameArray.Length; i++)
-                NewNameArray[i + 1] = NameArray[i];
-
-            NameArray = NewNameArray;
-
-            string[] NewPositionArray = new string[PositionArray.Length + 1];
-
-            NewPositionArray[index] = position;
-
-            for (int i = 0; i < index; i++)
-                NewPositionArray[i] = PositionArray[i];
-
-            for (int i = index; i < PositionArray.Length; i++)
-                NewPositionArray[i + 1] = PositionArray[i];
-
-            PositionArray = NewPositionArray;
+            resizeUpNamePosition(ref nameArray, ref positionArray, index, name, position);
         }
         else
         {
             Console.WriteLine("\nТакого порядкового номера не существует! Попробуйте снова.");
-            Console.WriteLine("\nНажмите клавишу - Ввод для продолжения");
+            Console.WriteLine("\nНажмите любую клавишу для продолжения");
             Console.ReadKey();
         }
     }
 
-    static void OutputAllList(string[] NameArray, string[] PositionArray)
+    static void OutputAllList(string[] nameArray, string[] positionArray)
     {
         Console.Clear();
 
-        for (int i = 0; i < NameArray.Length; i++)
-            Console.WriteLine($"\n{i} | {NameArray[i]} - {PositionArray[i]}");
+        for (int i = 0; i < nameArray.Length; i++)
+            Console.WriteLine($"\n{i} | {nameArray[i]} - {positionArray[i]}");
 
-        Console.WriteLine("\nНажмите клавишу - Ввод для продолжения");
+        Console.WriteLine("\nНажмите любую клавишу для продолжения");
         Console.ReadKey();
     }
 
-    static void RemoveNamePosition(ref string[] NameArray, ref string[] PositionArray)
+    static void RemoveNamePosition(ref string[] nameArray, ref string[] positionArray)
     {
         Console.WriteLine("\nВведите порядковый номер");
         int index = Convert.ToInt32(Console.ReadLine());
 
-        if (index < NameArray.Length && index != 0)
-        {
-            string[] NewNameArray = new string[NameArray.Length - 1];
-
-            for (int i = 0; i < index; i++)
-                NewNameArray[i] = NameArray[i];
-
-            for (int i = index + 1; i < NameArray.Length; i++)
-                NewNameArray[i - 1] = NameArray[i];
-
-            NameArray = NewNameArray;
-
-            string[] NewPositionArray = new string[PositionArray.Length - 1];
-
-            for (int i = 0; i < index; i++)
-                NewPositionArray[i] = PositionArray[i];
-
-            for (int i = index + 1; i < PositionArray.Length; i++)
-                NewPositionArray[i - 1] = PositionArray[i];
-
-            PositionArray = NewPositionArray;
-        }
+        if (index < nameArray.Length && index != 0)
+            resizeDownNamePosition(ref nameArray, ref positionArray, index);
         else
-        {
             Console.WriteLine("\nТакого порядкового номера не существует! Попробуйте снова.");
-        }
 
-        Console.WriteLine("\nНажмите клавишу - Ввод для продолжения");
+        Console.WriteLine("\nНажмите любую клавишу для продолжения");
         Console.ReadKey();
     }
-    
-    static void SearchName(string[] NameArray, string[] PositionArray)
+
+    static void SearchName(string[] nameArray, string[] positionArray)
     {
-        bool nameIsFined = false;
+        bool isFined = false;
 
-        Console.Write("\nВведите Фамилию: ");
-        string name = Console.ReadLine();
+        Console.Write("\nВведите полностью Фамилию (регистр не важен): ");
+        string userName = Console.ReadLine().ToLower();
 
-        for (int i = 0; i < NameArray.Length; i++)
+        for (int i = 1; i < nameArray.Length; i++)
         {
-            if (name.ToLower() == NameArray[i].ToLower())
+            string[] newNameArray = nameArray[i].Split(' ');
+
+            if (userName == newNameArray[0].ToLower())
             {
-                Console.Write($"\n{i} | {NameArray[i]} - {PositionArray[i]}");
-                nameIsFined = true;
+                Console.Write($"\n{i} | {nameArray[i]} - {positionArray[i]}");
+                isFined = true;
             }
         }
 
-        if (nameIsFined == false)
+        if (isFined == false)
         {
-            Console.Write("Такой фамилии не существует! Попробуйте снова.");
+            Console.Write("\nТакой фамилии не существует! Попробуйте снова.");
         }
 
-        Console.WriteLine("\nНажмите клавишу - Ввод для продолжения");
+        Console.Write("\n\nНажмите любую клавишу для продолжения");
         Console.ReadKey();
+    }
+
+    static void resizeUpNamePosition(ref string[] nameArray, ref string[] positionArray, int index, string name, string position)
+    {
+        string[] newNameArray = new string[nameArray.Length + 1];
+
+        newNameArray[index] = name;
+
+        for (int i = 0; i < index; i++)
+            newNameArray[i] = nameArray[i];
+
+        for (int i = index; i < nameArray.Length; i++)
+            newNameArray[i + 1] = nameArray[i];
+
+        nameArray = newNameArray;
+
+        string[] newPositionArray = new string[positionArray.Length + 1];
+
+        newPositionArray[index] = position;
+
+        for (int i = 0; i < index; i++)
+            newPositionArray[i] = positionArray[i];
+
+        for (int i = index; i < positionArray.Length; i++)
+            newPositionArray[i + 1] = positionArray[i];
+
+        positionArray = newPositionArray;
+    }
+
+    static void resizeDownNamePosition(ref string[] nameArray, ref string[] positionArray, int index)
+    {
+        string[] newNameArray = new string[nameArray.Length - 1];
+
+        for (int i = 0; i < index; i++)
+            newNameArray[i] = nameArray[i];
+
+        for (int i = index + 1; i < nameArray.Length; i++)
+            newNameArray[i - 1] = nameArray[i];
+
+        nameArray = newNameArray;
+
+        string[] newPositionArray = new string[positionArray.Length - 1];
+
+        for (int i = 0; i < index; i++)
+            newPositionArray[i] = positionArray[i];
+
+        for (int i = index + 1; i < positionArray.Length; i++)
+            newPositionArray[i - 1] = positionArray[i];
+
+        positionArray = newPositionArray;
     }
 }
