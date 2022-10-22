@@ -70,7 +70,7 @@ internal class Program
             Console.WriteLine("\nВведите должность");
             string position = Console.ReadLine();
 
-            resizeUpNamePosition(ref nameArray, ref positionArray, index, name, position);
+            ResizeUpNamePosition(ref nameArray, ref positionArray, index, name, position);
         }
         else
         {
@@ -97,7 +97,7 @@ internal class Program
         int index = Convert.ToInt32(Console.ReadLine());
 
         if (index < nameArray.Length && index != 0)
-            resizeDownNamePosition(ref nameArray, ref positionArray, index);
+            ResizeDownNamePosition(ref nameArray, ref positionArray, index);
         else
             Console.WriteLine("\nТакого порядкового номера не существует! Попробуйте снова.");
 
@@ -132,7 +132,7 @@ internal class Program
         Console.ReadKey();
     }
 
-    static void resizeUpNamePosition(ref string[] nameArray, ref string[] positionArray, int index, string name, string position)
+    static void ResizeUpNamePosition(ref string[] nameArray, ref string[] positionArray, int index, string name, string position)
     {
         string[] newNameArray = new string[nameArray.Length + 1];
 
@@ -159,7 +159,7 @@ internal class Program
         positionArray = newPositionArray;
     }
 
-    static void resizeDownNamePosition(ref string[] nameArray, ref string[] positionArray, int index)
+    static void ResizeDownNamePosition(ref string[] nameArray, ref string[] positionArray, int index)
     {
         string[] newNameArray = new string[nameArray.Length - 1];
 
