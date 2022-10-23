@@ -6,11 +6,11 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        const string insertNamePosition = "1";
-        const string outputAllList = "2";
-        const string removeNamePosition = "3";
-        const string searchName = "4";
-        const string exit = "5";
+        const string InsertNamePosition = "1";
+        const string OutputAllList = "2";
+        const string RemoveNamePosition = "3";
+        const string FindName = "4";
+        const string Exit = "5";
 
         bool isWorking = true;
         string userInput;
@@ -25,62 +25,54 @@ internal class Program
         while (isWorking != false)
         {
             Console.Clear();
-            Console.WriteLine($"Добавить досье: нажмите     - {insertNamePosition}");
-            Console.WriteLine($"Вывести всё досье: нажмите  - {outputAllList}");
-            Console.WriteLine($"Удалить досье: нажмите      - {removeNamePosition}");
-            Console.WriteLine($"Поиск по фамилии: нажмите   - {searchName}");
-            Console.WriteLine($"Выход: нажмите              - {exit}");
+            Console.WriteLine($"Добавить досье: нажмите     - {InsertNamePosition}");
+            Console.WriteLine($"Вывести всё досье: нажмите  - {OutputAllList}");
+            Console.WriteLine($"Удалить досье: нажмите      - {RemoveNamePosition}");
+            Console.WriteLine($"Поиск по фамилии: нажмите   - {FindName}");
+            Console.WriteLine($"Выход: нажмите              - {Exit}");
             Console.Write("\nВаш выбор: ");
             userInput = Console.ReadLine();
 
             switch (userInput)
             {
-                case insertNamePosition:
-                    InsertNamePosition(ref nameArray, ref positionArray);
+                case InsertNamePosition:
+                    AddNamePosition(ref nameArray, ref positionArray);
                     break;
 
-                case outputAllList:
-                    OutputAllList(nameArray, positionArray);
+                case OutputAllList:
+                    GetAllList(nameArray, positionArray);
                     break;
 
-                case removeNamePosition:
-                    RemoveNamePosition(ref nameArray, ref positionArray);
+                case RemoveNamePosition:
+                    DeleteNamePosition(ref nameArray, ref positionArray);
                     break;
 
-                case searchName:
+                case FindName:
                     SearchName(nameArray, positionArray);
                     break;
 
-                case exit:
+                case Exit:
                     isWorking = false;
                     break;
             }
         }
     }
 
-    static void InsertNamePosition(ref string[] nameArray, ref string[] positionArray)
+    static void AddNamePosition(ref string[] nameArray, ref string[] positionArray)
     {
-        Console.WriteLine("\nВведите порядковый номер");
-        int index = Convert.ToInt32(Console.ReadLine());
-
-        if (index <= nameArray.Length && index != 0)
-        {
             Console.WriteLine("\nВведите ФИО");
             string name = Console.ReadLine();
+            string data = name;
+
+            ResizeUp(ref nameArray, data);
+
             Console.WriteLine("\nВведите должность");
             string position = Console.ReadLine();
-
-            ResizeUpNamePosition(ref nameArray, ref positionArray, index, name, position);
-        }
-        else
-        {
-            Console.WriteLine("\nТакого порядкового номера не существует! Попробуйте снова.");
-            Console.WriteLine("\nНажмите любую клавишу для продолжения");
-            Console.ReadKey();
-        }
+            data = position;
+            ResizeUp(ref positionArray, data);
     }
 
-    static void OutputAllList(string[] nameArray, string[] positionArray)
+    static void GetAllList(string[] nameArray, string[] positionArray)
     {
         Console.Clear();
 
@@ -91,15 +83,20 @@ internal class Program
         Console.ReadKey();
     }
 
-    static void RemoveNamePosition(ref string[] nameArray, ref string[] positionArray)
+    static void DeleteNamePosition(ref string[] nameArray, ref string[] positionArray)
     {
         Console.WriteLine("\nВведите порядковый номер");
         int index = Convert.ToInt32(Console.ReadLine());
 
         if (index < nameArray.Length && index != 0)
-            ResizeDownNamePosition(ref nameArray, ref positionArray, index);
+        {
+            ResizeDown(ref nameArray, index);
+            ResizeDown(ref positionArray, index);
+        }
         else
+        {
             Console.WriteLine("\nТакого порядкового номера не существует! Попробуйте снова.");
+        }
 
         Console.WriteLine("\nНажмите любую клавишу для продолжения");
         Console.ReadKey();
@@ -132,53 +129,29 @@ internal class Program
         Console.ReadKey();
     }
 
-    static void ResizeUpNamePosition(ref string[] nameArray, ref string[] positionArray, int index, string name, string position)
+    static void ResizeUp(ref string[] array, string data)
     {
-        string[] newNameArray = new string[nameArray.Length + 1];
+        string[] newArray = new string[array.Length + 1];
 
-        newNameArray[index] = name;
+        for (int i = 0; i < array.Length; i++)
+        {
+            newArray[i] = array[i];
+        }
 
-        for (int i = 0; i < index; i++)
-            newNameArray[i] = nameArray[i];
-
-        for (int i = index; i < nameArray.Length; i++)
-            newNameArray[i + 1] = nameArray[i];
-
-        nameArray = newNameArray;
-
-        string[] newPositionArray = new string[positionArray.Length + 1];
-
-        newPositionArray[index] = position;
-
-        for (int i = 0; i < index; i++)
-            newPositionArray[i] = positionArray[i];
-
-        for (int i = index; i < positionArray.Length; i++)
-            newPositionArray[i + 1] = positionArray[i];
-
-        positionArray = newPositionArray;
+        newArray[array.Length] = data;
+        array = newArray;
     }
 
-    static void ResizeDownNamePosition(ref string[] nameArray, ref string[] positionArray, int index)
+    static void ResizeDown(ref string[] array, int index)
     {
-        string[] newNameArray = new string[nameArray.Length - 1];
+        string[] newArray = new string[array.Length - 1];
 
         for (int i = 0; i < index; i++)
-            newNameArray[i] = nameArray[i];
+            newArray[i] = array[i];
 
-        for (int i = index + 1; i < nameArray.Length; i++)
-            newNameArray[i - 1] = nameArray[i];
+        for (int i = index + 1; i < array.Length; i++)
+            newArray[i - 1] = array[i];
 
-        nameArray = newNameArray;
-
-        string[] newPositionArray = new string[positionArray.Length - 1];
-
-        for (int i = 0; i < index; i++)
-            newPositionArray[i] = positionArray[i];
-
-        for (int i = index + 1; i < positionArray.Length; i++)
-            newPositionArray[i - 1] = positionArray[i];
-
-        positionArray = newPositionArray;
+        array = newArray;
     }
 }

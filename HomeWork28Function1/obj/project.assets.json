@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\CSlight\\HomeWork28Function1\\HomeWork28Function1\\HomeWork28Function1.csproj",
+      "projectUniqueName": "E:\\Repos\\HomeWork28Function1\\HomeWork28Function1\\HomeWork28Function1.csproj",
       "projectName": "HomeWork28Function1",
-      "projectPath": "E:\\CSlight\\HomeWork28Function1\\HomeWork28Function1\\HomeWork28Function1.csproj",
+      "projectPath": "E:\\Repos\\HomeWork28Function1\\HomeWork28Function1\\HomeWork28Function1.csproj",
       "packagesPath": "C:\\Users\\Family\\.nuget\\packages\\",
-      "outputPath": "E:\\CSlight\\HomeWork28Function1\\HomeWork28Function1\\obj\\",
+      "outputPath": "E:\\Repos\\HomeWork28Function1\\HomeWork28Function1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Family\\AppData\\Roaming\\NuGet\\NuGet.Config",
